@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Temperature Hot</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url(images/bg-image.jpg) no-repeat;
+            background-size: cover;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form class="col-md-6 m-auto py-5">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="cityInput" placeholder="Enter a location for Weather ...">
+                <div class="input-group-append">
+                    <button type="button" id="submitBtn" class="btn btn-danger">Search</button>
+                </div>
+            </div>
+        </form>
+        <div class="weather-status text-white text-center">
+            <img id="showIcon" src="https://openweathermap.org/img/wn/02d@2x.png" alt="">
+            <h1 id="cityOutput">Dhaka</h1>
+            <h3><span id="temp">38.06</span>&deg;C</h3>
+            <h1 class="lead">Clouds</h1>
+        </div>
+    </div>
+    <script>
+        function getWeather(cityName) {
+            fetch(`http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=79f05b60b073f242facfa25f62f58771`)
+                    .then(response => response.json())
+                    .then(data => {
+                        // let cityInput = document.getElementById("cityInput").value
+                        // document.getElementById ("cityOutput").textContent = cityInput
+
+                        // let getCityName = data.name;
+                        // document.getElementById('cityOutput').textContent = getCityName;   
+
+                       
+                        document.getElementById('cityOutput').textContent = data.name;  
+
+
+                        // let celcius =Math.round(data.main.temp-273)
+                        // //  Math.round(Number(data.main.temp) - 273.15);
+                        //  document.getElementById('temp').textContent = celcius;  
+                        
+                        
+                        // let celcius =Math.round(data.main.temp-273)
+                        //  Math.round(Number(data.main.temp) - 273.15);
+                         document.getElementById('temp').textContent = Math.round(data.main.temp-273);
+
+                    //   let temper = data.main.temp-273
+                    //   document.getElementById ("temp").textContent = temper
+                
+                        document.getElementById ("showIcon").src = data.weather[0].icon
+                    
+
+                    })
+
+
+        }
+        getWeather()
+    const submitBtn = document.getElementById ("submitBtn")
+    submitBtn.addEventListener('click', function (){
+        const dd = cityInput.value
+
+        
+        getWeather(dd)
+        
+    })
+
+
+    </script>
+
+</body>
+
+</html>
